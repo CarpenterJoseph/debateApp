@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "650235064963",
+    "firebase_url": "https://debateapp-4568e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "debateapp-4568e",
+    "storage_bucket": "debateapp-4568e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650235064963:android:68c9abafd692f2d1faa1b6",
+        "android_client_info": {
+          "package_name": "com.example.debateapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650235064963-n9efa6ntuirj5697ce95ifpop3v1oq16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBM-8dic45SZlrFLM2UvGMso_taTdLyGEI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650235064963-n9efa6ntuirj5697ce95ifpop3v1oq16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

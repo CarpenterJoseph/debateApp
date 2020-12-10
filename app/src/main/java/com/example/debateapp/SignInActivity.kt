@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,7 +18,10 @@ class SignInActivity : AppCompatActivity() {
     }
 
     fun signUpAction(v: View){
+        val database = Firebase.database
+        val myRef = database.getReference("message")
 
+        myRef.setValue("Hello, orld!")
     }
 
     private fun startHomeActivity(){
