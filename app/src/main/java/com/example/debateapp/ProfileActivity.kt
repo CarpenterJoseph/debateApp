@@ -11,7 +11,11 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
     }
 
-    fun startHomeActivity(v: View){
+    fun backAction(v: View) {
+        startHomeActivity()
+    }
+
+    private fun startHomeActivity(){
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }

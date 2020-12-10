@@ -57,7 +57,7 @@ class DebateAdapter(
             updateListener: UpdateCollection
         ) {
             //This refers to id's from the .xml file.
-            itemView.title.text = debate.title
+            itemView.title.text = debate.topic
 
             if (debate.canJoinAsDebater) itemView.joinAsDebater.visibility = View.VISIBLE
             else itemView.joinAsDebater.visibility = View.INVISIBLE

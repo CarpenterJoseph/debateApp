@@ -43,4 +43,9 @@ class HomeActivity : AppCompatActivity(), UpdateCollection {
         val intent = Intent(this, ProfileActivity::class.java)
         startActivity(intent)
     }
+
+    fun startCreateDebateActivity(v: View) {
+        val intent = Intent(this, CreateDebateActivity::class.java)
+        startActivity(intent)
+    }
 }

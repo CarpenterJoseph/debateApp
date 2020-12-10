@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         if (userSignedIn) {
             startHomeActivity()
         } else {
-            startSignInActivity()
+            startHomeActivity()
         }
     }
 
