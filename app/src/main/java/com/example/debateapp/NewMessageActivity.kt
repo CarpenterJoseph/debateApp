@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.debateapp.models.Message
+import com.example.debateapp.repositories.CurrentUser
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -23,7 +24,7 @@ class NewMessageActivity : AppCompatActivity() {
     }
 
     fun sendMessage(v: View){
-        var message = Message(Timestamp.now(), findViewById<EditText>(R.id.editDescription).text.toString())
+        var message = Message(CurrentUser.user.username.toString(), Timestamp.now(), findViewById<EditText>(R.id.editDescription).text.toString())
         db.collection("debates")
             .document(id)
             .collection("messages")

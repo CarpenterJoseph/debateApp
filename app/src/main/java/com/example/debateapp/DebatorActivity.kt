@@ -38,7 +38,7 @@ class DebatorActivity : AppCompatActivity() {
     fun updateMessages() {
         messages.forEach {
             var textView = TextView(this)
-            textView.text = it.content
+            textView.text = it.username + ": " + it.content
             linearLayout.addView(textView)
         }
     }
@@ -69,10 +69,11 @@ class DebatorActivity : AppCompatActivity() {
             .orderBy("timestamp")
             .addSnapshotListener { snapshot, e ->
                 for (doc in snapshot!!) {
+                    val userName = doc.data["username"] as String
                     val timeStamp = doc.data["timestamp"] as Timestamp
                     val content = doc.data["content"].toString()
                     if (timeStamp != null && content != null) {
-                        messages.add(Message(timeStamp, content))
+                        messages.add(Message(userName, timeStamp, content))
                     }
                 }
                 updateMessages()

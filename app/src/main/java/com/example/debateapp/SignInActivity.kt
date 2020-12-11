@@ -37,9 +37,10 @@ class SignInActivity : AppCompatActivity() {
                     var docUserName = doc.data["username"] as String
                     var docPassWord = doc.data["password"] as String
                     var docDecsription = doc.data["description"] as String
-                    if(docUserName == userName && docPassWord == password)
+                    if(docUserName == userName && docPassWord == password){
                         CurrentUser.updateUser(docUserName, docDecsription)
-                    startHomeActivity()
+                        startHomeActivity()
+                    }
                 }
             }
     }
