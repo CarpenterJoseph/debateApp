@@ -1,10 +1,14 @@
 package com.example.debateapp.repositories
 
+import android.util.Log
+import com.example.debateapp.HomeActivity
 import com.example.debateapp.models.Debate
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 object DebateRepository {
 
-    private var debates: MutableList<Debate> = mutableListOf()
+     var debates: MutableList<Debate> = mutableListOf()
 
 
     fun getData(): MutableList<Debate> {
@@ -15,19 +19,20 @@ object DebateRepository {
 
     //just put mock data here - in reality it would be from a database
     private fun retrieveData() {
-        debates.add(
-            Debate(
-                id = "1",
-                topic = "Mining in Boundary Waters",
-                canJoinAsDebater = true
-            )
-        )
-        debates.add(
-            Debate(
-                id = "2",
-                topic = "Covid-19 Restrictions",
-                canJoinAsDebater = false
-            )
-        )
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("debates")
+            .addSnapshotListener { value, e ->
+                if (e != null) {
+                    Log.w("test", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                for (document in value!!) {
+                    val debate = document.toObject(Debate::class.java)
+                    debate.id = document.id
+                    debates.add(debate)
+                }
+            }
     }
 }

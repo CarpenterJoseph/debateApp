@@ -14,16 +14,20 @@ import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity(), UpdateCollection {
 
+    private lateinit var debates: MutableList<Debate>
+
     private lateinit var debateList: MutableList<Debate>
     private lateinit var adapter: DebateAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         updateUI()
     }
 
     private fun updateUI() {
+        debates = DebateRepository.debates
         debateList = DebateRepository.getData()
 
         debate_recyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -36,8 +40,10 @@ class HomeActivity : AppCompatActivity(), UpdateCollection {
     }
 
     override fun update(nr: Int) {
-        TODO("Not yet implemented")
+        updateUI()
     }
+
+
 
     fun startProfileActivity(v: View) {
         val intent = Intent(this, ProfileActivity::class.java)

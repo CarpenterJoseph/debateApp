@@ -1,11 +1,13 @@
 package com.example.debateapp.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.debateapp.DebatorActivity
 import com.example.debateapp.R
 import com.example.debateapp.interfaces.UpdateCollection
 import com.example.debateapp.models.Debate
@@ -22,8 +24,6 @@ class DebateAdapter(
     //The context refers to the ui parent so to speak
     private lateinit var context: Context
 
-    //This is a set of the items we have in our collection
-    private var favorites: MutableSet<String> = HashSet()
 
     //this method is returning the view for each item in the list
     //also something you must override
@@ -58,6 +58,12 @@ class DebateAdapter(
         ) {
             //This refers to id's from the .xml file.
             itemView.title.text = debate.topic
+
+            itemView.joinAsDebater.setOnClickListener {
+                val intent = Intent(context, DebatorActivity::class.java)
+                intent.putExtra("DEBATE_ID", debate.id)
+                context.startActivity(intent)
+            }
 
             if (debate.canJoinAsDebater) itemView.joinAsDebater.visibility = View.VISIBLE
             else itemView.joinAsDebater.visibility = View.INVISIBLE
