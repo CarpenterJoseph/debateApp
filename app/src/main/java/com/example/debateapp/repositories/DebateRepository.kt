@@ -12,13 +12,13 @@ object DebateRepository {
 
 
     fun getData(): MutableList<Debate> {
-        if (debates.size == 0)
-            retrieveData()
+        retrieveData()
         return debates
     }
 
     //just put mock data here - in reality it would be from a database
     private fun retrieveData() {
+        debates.clear()
         val db = FirebaseFirestore.getInstance()
 
         db.collection("debates")

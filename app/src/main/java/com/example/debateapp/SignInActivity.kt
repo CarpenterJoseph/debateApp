@@ -1,11 +1,14 @@
 package com.example.debateapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.example.debateapp.models.Message
 import com.example.debateapp.repositories.CurrentUser
 import com.google.firebase.Timestamp
@@ -33,11 +36,16 @@ class SignInActivity : AppCompatActivity() {
         db.collection("users")
             .get()
             .addOnSuccessListener { snapshot ->
+                var docUserName: String
+                var docPassWord: String
+                var docDecsription: String
                 for(doc in snapshot){
-                    var docUserName = doc.data["username"] as String
-                    var docPassWord = doc.data["password"] as String
-                    var docDecsription = doc.data["description"] as String
-                    if(docUserName == userName && docPassWord == password){
+                    docUserName = doc.data["username"] as String
+                    docPassWord = doc.data["password"] as String
+                    docDecsription = doc.data["description"] as String
+                    if(docUserName == userName && docPassWord != password){
+                        Toast.makeText(this, "Password incorrect!", Toast.LENGTH_LONG).show()
+                    } else if (docUserName == userName && docPassWord == password){
                         CurrentUser.updateUser(docUserName, docDecsription)
                         startHomeActivity()
                     }

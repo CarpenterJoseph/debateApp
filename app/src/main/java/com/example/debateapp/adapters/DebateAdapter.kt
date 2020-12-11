@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.debateapp.DebatorActivity
 import com.example.debateapp.R
+import com.example.debateapp.ViewerActivity
 import com.example.debateapp.interfaces.UpdateCollection
 import com.example.debateapp.models.Debate
 import kotlinx.android.synthetic.main.debate_list_element.view.*
@@ -61,6 +62,12 @@ class DebateAdapter(
 
             itemView.joinAsDebater.setOnClickListener {
                 val intent = Intent(context, DebatorActivity::class.java)
+                intent.putExtra("DEBATE_ID", debate.id)
+                context.startActivity(intent)
+            }
+
+            itemView.joinAsSpectator.setOnClickListener {
+                val intent = Intent(context, ViewerActivity::class.java)
                 intent.putExtra("DEBATE_ID", debate.id)
                 context.startActivity(intent)
             }

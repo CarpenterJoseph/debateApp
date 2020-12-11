@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.debateapp.models.Debate
 import com.example.debateapp.models.Message
 import com.google.firebase.Timestamp
@@ -14,7 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class DebatorActivity : AppCompatActivity() {
+class ViewerActivity : AppCompatActivity() {
     var db = Firebase.firestore
     lateinit var id: String
     var messages = mutableListOf<Message>()
@@ -22,20 +21,14 @@ class DebatorActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_debator)
+        setContentView(R.layout.activity_viewer)
         id = intent.getStringExtra("DEBATE_ID").toString()
         db = FirebaseFirestore.getInstance();
         retrieveDebateData(id)
         linearLayout = findViewById(R.id.linearLayout)
     }
 
-    fun newMessage(v: View) {
-        val intent = Intent(this, NewMessageActivity::class.java)
-        intent.putExtra("DEBATE_ID", id)
-        startActivity(intent)
-    }
-
-    private fun updateMessages() {
+    fun updateMessages() {
         messages.forEach {
             var textView = TextView(this)
             textView.text = it.username + ": " + it.content
