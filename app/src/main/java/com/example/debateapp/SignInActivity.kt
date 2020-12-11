@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import com.example.debateapp.models.Message
+import com.example.debateapp.repositories.CurrentUser
+import com.google.firebase.Timestamp
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,7 +29,19 @@ class SignInActivity : AppCompatActivity() {
     fun signInAction(v: View) {
         val userName = findViewById<EditText>(R.id.editTextTopic).text.toString()
         val password: String = findViewById<EditText>(R.id.editTextPassword).text.toString()
-        startHomeActivity()
+
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { snapshot ->
+                for(doc in snapshot){
+                    var docUserName = doc.data["username"] as String
+                    var docPassWord = doc.data["password"] as String
+                    var docDecsription = doc.data["description"] as String
+                    if(docUserName == userName && docPassWord == password)
+                        CurrentUser.updateUser(docUserName, docDecsription)
+                    startHomeActivity()
+                }
+            }
     }
 
     fun signUpAction(v: View) {

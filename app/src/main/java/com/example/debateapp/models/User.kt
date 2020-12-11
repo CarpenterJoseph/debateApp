@@ -6,5 +6,6 @@ import java.util.*
 @IgnoreExtraProperties
 data class User(
     var username: String? = "",
-    var password: String? = ""
+    var password: String? = "",
+    var description: String
 )

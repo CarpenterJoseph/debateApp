@@ -40,7 +40,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun addNewUser(userName: String, password: String?) {
-        var user = User(userName, password)
+        var user = User(userName, password, "")
         db.collection("users").add(user)
     }
 }

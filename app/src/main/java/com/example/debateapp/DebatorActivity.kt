@@ -3,10 +3,13 @@ package com.example.debateapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.debateapp.models.Debate
+import com.example.debateapp.models.Message
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -14,18 +17,33 @@ import com.google.firebase.ktx.Firebase
 class DebatorActivity : AppCompatActivity() {
     var db = Firebase.firestore
     lateinit var id: String
+    var messages = mutableListOf<Message>()
+    lateinit var linearLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_debator)
-
-        db = FirebaseFirestore.getInstance();
         id = intent.getStringExtra("DEBATE_ID").toString()
-        Log.d("test", id)
+        db = FirebaseFirestore.getInstance();
         retrieveDebateData(id)
+        linearLayout = findViewById(R.id.linearLayout)
     }
 
-    fun backAction(v: View){
+    fun newMessage(v: View) {
+        val intent = Intent(this, NewMessageActivity::class.java)
+        intent.putExtra("DEBATE_ID", id)
+        startActivity(intent)
+    }
+
+    fun updateMessages() {
+        messages.forEach {
+            var textView = TextView(this)
+            textView.text = it.content
+            linearLayout.addView(textView)
+        }
+    }
+
+    fun backAction(v: View) {
         startHomeActivity()
     }
 
@@ -43,6 +61,21 @@ class DebatorActivity : AppCompatActivity() {
                 if (currentDebate != null) {
                     findViewById<TextView>(R.id.debatorToolbarText).text = currentDebate.topic
                 }
+            }
+
+        db.collection("debates")
+            .document(id)
+            .collection("messages")
+            .orderBy("timestamp")
+            .addSnapshotListener { snapshot, e ->
+                for (doc in snapshot!!) {
+                    val timeStamp = doc.data["timestamp"] as Timestamp
+                    val content = doc.data["content"].toString()
+                    if (timeStamp != null && content != null) {
+                        messages.add(Message(timeStamp, content))
+                    }
+                }
+                updateMessages()
             }
     }
 }
